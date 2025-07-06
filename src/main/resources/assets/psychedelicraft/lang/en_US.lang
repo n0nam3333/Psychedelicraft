@@ -103,6 +103,10 @@ item.harmonium.dye13.name=Magenta Harmonium
 item.harmonium.dye14.name=Orange Harmonium
 item.harmonium.dye15.name=White Harmonium
 
+item.psCoffeeFilter.name=Coffee Filter
+item.psCoffeePowder.name=Coffee Powder
+tile.psCoffeeMachine.name=Coffee Machine
+
 entity.realityRift.name=Zero Rift
 
 tile.bed.onDrugs=The drugs in your body keep you awake

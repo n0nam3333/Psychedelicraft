@@ -6,10 +6,7 @@
 package ivorius.psychedelicraft.gui;
 
 import cpw.mods.fml.common.network.IGuiHandler;
-import ivorius.psychedelicraft.blocks.TileEntityBarrel;
-import ivorius.psychedelicraft.blocks.TileEntityDistillery;
-import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
-import ivorius.psychedelicraft.blocks.TileEntityMashTub;
+import ivorius.psychedelicraft.blocks.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -33,6 +30,7 @@ public class PSGuiHandler implements IGuiHandler
     public static final int barrelContainerID = 7;
     public static final int woodenVatContainerID = 8;
     public static final int distilleryContainerID = 9;
+    public static final int coffeeMachineContainerID = 10;
 
     @Override
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
@@ -64,6 +62,12 @@ public class PSGuiHandler implements IGuiHandler
             TileEntity tileEntity = world.getTileEntity(x, y, z);
             if (tileEntity instanceof TileEntityDistillery)
                 return new ContainerFluidHandler(player.inventory, tileEntity, (IFluidHandler) tileEntity, ForgeDirection.DOWN);
+        }
+        else if (id == coffeeMachineContainerID) {
+            TileEntity tileEntity = world.getTileEntity(x, y, z);
+            if (tileEntity instanceof TileEntityCoffeeMachine) {
+                return new ContainerCoffeeMachine(player, (TileEntityCoffeeMachine)tileEntity);
+            }
         }
 
         return null;
@@ -99,6 +103,11 @@ public class PSGuiHandler implements IGuiHandler
             TileEntity tileEntity = world.getTileEntity(x, y, z);
             if (tileEntity instanceof TileEntityDistillery)
                 return new GuiDistillery(player.inventory, (TileEntityDistillery) tileEntity);
+        } else if (id == coffeeMachineContainerID) {
+            TileEntity tileEntity = world.getTileEntity(x, y, z);
+            if (tileEntity instanceof TileEntityCoffeeMachine) {
+                return new GuiCoffeeMachine((TileEntityCoffeeMachine)tileEntity, player);
+            }
         }
 
         return null;

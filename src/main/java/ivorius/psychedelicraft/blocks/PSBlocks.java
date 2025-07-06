@@ -37,4 +37,6 @@ public class PSBlocks
     public static Block glitched;
 
     public static Block bottleRack;
+
+    public static Block coffeeMachine;
 }

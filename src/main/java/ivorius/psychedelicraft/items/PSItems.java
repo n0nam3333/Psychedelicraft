@@ -64,4 +64,7 @@ public class PSItems
     public static Item peyoteJoint;
 
     public static Item harmonium;
+
+    public static Item coffeePowder;
+    public static Item coffeeFilter;
 }

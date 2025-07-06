@@ -11,7 +11,6 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import ivorius.ivtoolkit.gui.IntegerRange;
-import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.*;
 import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.EntityMolotovCocktail;
@@ -23,7 +22,6 @@ import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import ivorius.psychedelicraft.entities.drugs.DrugRegistry;
 import ivorius.psychedelicraft.fluids.*;
 import ivorius.psychedelicraft.items.*;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -36,7 +34,6 @@ import static ivorius.psychedelicraft.Psychedelicraft.modBase;
 import static ivorius.psychedelicraft.blocks.PSBlocks.*;
 import static ivorius.psychedelicraft.crafting.OreDictionaryConstants.*;
 import static ivorius.psychedelicraft.entities.PSEntityList.*;
-import static ivorius.psychedelicraft.fluids.FluidAlcohol.NamedAlcohol;
 import static ivorius.psychedelicraft.fluids.FluidHelper.MILLIBUCKETS_PER_LITER;
 import static ivorius.psychedelicraft.fluids.PSFluids.*;
 import static ivorius.psychedelicraft.items.PSItems.*;
@@ -145,6 +142,19 @@ public class PSRegistryHandler
         wineGrapes.setCreativeTab(Psychedelicraft.creativeTab);
         OreDictionary.registerOre(DC_GRAPE, wineGrapes);
         OreDictionary.registerOre(DC_GRAPE_CROP, wineGrapes);
+
+        // -------------------- Coffee Machine --------------------
+
+        coffeeMachine = (new BlockCoffeeMachine()).setHardness(0.1F).setBlockName("psCoffeeMachine");
+        coffeeMachine.setCreativeTab(Psychedelicraft.creativeTab);
+        GameRegistry.registerBlock(coffeeMachine, "psCoffeeMachine");
+        GameRegistry.registerTileEntity(TileEntityCoffeeMachine.class, "tilePsCoffeeMachine");
+        coffeePowder = new CoffeePowder();
+        coffeePowder.setCreativeTab(Psychedelicraft.creativeTab);
+        GameRegistry.registerItem(coffeePowder, coffeePowder.getUnlocalizedName());
+        coffeeFilter = new CoffeeFilter();
+        coffeeFilter.setCreativeTab(Psychedelicraft.creativeTab);
+        GameRegistry.registerItem(coffeeFilter, coffeeFilter.getUnlocalizedName());
 
         //----------------------------------------------------------Molotov Cocktail----------------------------------
 

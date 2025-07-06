@@ -78,6 +78,9 @@ public class ClientProxy implements PSProxy
         MinecraftForgeClient.registerItemRenderer(PSItems.itemFlask, new ItemRendererModelCustom(new ItemRendererModelCustom.ItemModelRendererSimple(TileEntityRendererFlask.modelFlask), new ResourceLocation(MODID, filePathTextures + "flask.png"), 0.75f, new float[]{0f, -1.8f, 0f}, new float[]{0.0f, 0.0f, 0.0f}));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(PSBlocks.bottleRack), new ItemRendererModelCustom(new ItemRendererModelCustom.ItemModelRendererSimple(TileEntityRendererBottleRack.modelBottleRack), new ResourceLocation(MODID, filePathTextures + "wineRack.png"), 1f, new float[]{0f, -1.8f, 0.3f}, new float[]{0.0f, 0.0f, 0.0f}));
 
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(PSBlocks.coffeeMachine), new ItemRendererCoffeeMachine());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoffeeMachine.class, new TESRCoffeeMachine());
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMashTub.class, new TileEntityRendererMashTub());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBarrel.class, new TileEntityRendererBarrel());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDryingTable.class, new TileEntityRendererDryingTable());
