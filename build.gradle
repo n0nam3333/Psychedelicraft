@@ -2,20 +2,19 @@ buildscript {
     repositories {
         mavenCentral()
         maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-        maven {
-            url "https://plugins.gradle.org/m2/"
+            name = "github"
+            url = "https://github.com/juanmuscaria/maven/raw/master"
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:[1.2-1.4.6-SNAPSHOT,)'
     }
+}
+
+repositories {
+	flatDir {
+		dirs 'deps'
+	}
 }
 
 apply plugin: 'forge'
@@ -48,13 +47,12 @@ apply plugin: 'idea'
 
 configurations {
     provided
-//    provided.extendsFrom(compile)
 }
 
 sourceSets {
     main {
-        compileClasspath += [configurations.provided]
-        output.resourcesDir = output.classesDir
+        compileClasspath += configurations.provided
+        output.resourcesDir = output.getClassesDirs().getAsPath()
     }
 }
 
@@ -69,7 +67,7 @@ idea {
 idea.module.inheritOutputDirs = true
 
 dependencies {
-    provided 'ivorius.ivtoolkit:IvToolkit:1.2:dev'
+    provided 'ivorius.ivtoolkit:IvToolkit:1.2.1:dev'
 }
 
 processResources
@@ -136,68 +134,4 @@ task deobfJar(type: Jar) {
 artifacts {
     archives sourceJar
     archives deobfJar
-}
-
-uploadArchives() {
-    dependsOn reobf
-
-    if (project.hasProperty("mavenUrl") && project.hasProperty("mavenUser") && project.hasProperty("mavenPassword")) {
-        repositories {
-            logger.info('Publishing to files server')
-
-            mavenDeployer {
-
-                repository(url: project."mavenUrl") {
-                    authentication(userName: project."mavenUser", password: project."mavenPassword")
-                }
-
-                addFilter('deobf') {artifact, file ->
-                    artifact.attributes['classifier'] == 'dev'
-                }
-                pom('deobf').version = project.version
-                addFilter('sources') {artifact, file ->
-                    artifact.attributes['classifier'] == 'sources'
-                }
-                pom('sources').version = project.version
-                addFilter('universal') {artifact, file ->
-                    artifact.attributes['classifier'] == null
-                }
-                pom('universal').version = project.version
-
-                pom {
-                    groupId = project.group
-                    version = project.version
-                    artifactId = project.archivesBaseName
-                    project {
-                        name project.archivesBaseName
-                        packaging 'jar'
-                        description 'Adds drugs to the game minecraft'
-                        url 'https://github.com/Ivorforce/Psychedelicraft'
-
-                        scm {
-                            url 'scm:git:git@github.com:Ivorforce/Psychedelicraft.git'
-                            connection 'scm:git:git@github.com:Ivorforce/Psychedelicraft.git'
-                            developerConnection 'scm:git:git@github.com:Ivorforce/Psychedelicraft.git'
-                        }
-
-                        issueManagement {
-                            system 'github'
-                            url 'https://github.com/Ivorforce/Psychedelicraft/issues'
-                        }
-
-                        developers {
-                            developer {
-                                id 'Ivorius'
-                                name 'Ivorius'
-                                roles { role 'developer' }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    else {
-        logger.log(LogLevel.ERROR, 'No upload variables defined!');
-    }
 }
